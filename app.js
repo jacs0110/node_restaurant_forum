@@ -4,15 +4,16 @@ const handlebars = require('express-handlebars')
 const port = 3000
 
 // set up view engine
-app.engine('handlebars', handlebars({
+app.engine('.hbs', handlebars({
   extname: '.hbs',
   defaultLayout: 'main'
 }))
-app.set('view engine', 'handlebars')
+app.set('view engine', '.hbs')
 
 
 
-app.listent(port, () => {
+app.listen(port, () => {
   console.log(`Express app is listening on port ${port}...`)
 })
 
+require('./routes')(app)
