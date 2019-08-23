@@ -11,7 +11,7 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  const authenticateAdmin = (req, res, next) => {
+  const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
       if (req.user.isAdmin) { return next() }
       return res.redirect('/')
@@ -24,15 +24,16 @@ module.exports = (app, passport) => {
   })
   app.get('/restaurants', authenticated, restController.getRestaurants)
 
-  app.get('/admin', authenticateAdmin, (req, res) => {
+  app.get('/admin', authenticatedAdmin, (req, res) => {
     res.redirect('/admin/restaurants')
   })
-  app.get('/admin/restaurants', authenticateAdmin, adminController.getRestaurants)
-  app.get('/admin/restaurants/create', authenticateAdmin, adminController.createRestaurant)
-  app.post('/admin/restaurants', authenticateAdmin, adminController.postRestaurant)
-  app.get('/admin/restaurants/:id', authenticateAdmin, adminController.getRestaurant)
-  app.get('/admin/restaurants/:id/edit', authenticateAdmin, adminController.editRestaurant)
-  app.put('/admin/restaurants/:id', authenticateAdmin, adminController.putRestaurant)
+  app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
+  app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+  app.post('/admin/restaurants', authenticatedAdmin, adminController.postRestaurant)
+  app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
+  app.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
+  app.put('/admin/restaurants/:id', authenticatedAdmin, adminController.putRestaurant)
+  app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
