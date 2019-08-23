@@ -5,6 +5,7 @@ const db = require('./models')
 const session = require('express-session')
 const flash = require('connect-flash')
 const handlebars = require('express-handlebars')
+const methodOverride = require('method-override')
 const passport = require('./config/passport.js')
 
 const port = 3000
@@ -31,6 +32,8 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   next()
 })
+
+app.use(methodOverride('_method'))
 
 app.listen(port, () => {
   db.sequelize.sync()
