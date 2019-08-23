@@ -19,15 +19,23 @@ let adminController = {
     }
     return Restaurant.create({
       name: req.body.name,
-      tel: req.body.email,
-      address: req.body.email,
+      tel: req.body.tel,
+      address: req.body.address,
       opening_hours: req.body.opening_hours,
       description: req.body.description
     }).then(restaurant => {
       req.flash('success_messags', 'Restaurant was created successfully!')
       return res.redirect('/admin/restaurants')
     })
-  }
+  },
+
+  getRestaurant: (req, res) => {
+    return Restaurant.findByPk(req.params.id).then(restaurant => {
+      return res.render('admin/restaurant', {
+        restaurant: restaurant
+      })
+    })
+  },
 }
 
 module.exports = adminController
