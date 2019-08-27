@@ -6,6 +6,19 @@ let categoryController = {
     return Category.findAll().then(categories => {
       return res.render('admin/categories', { categories: categories })
     })
+  },
+
+  postCategory: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_messages', 'Please enter a name!')
+      return res.redirect('back')
+    } else {
+      return Category.create({
+        name: req.body.name
+      }).then(category => {
+        res.redirect('/admin/categories')
+      })
+    }
   }
 }
 
