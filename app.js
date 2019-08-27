@@ -13,7 +13,8 @@ const port = process.env.PORT || 3000
 // set up view engine
 app.engine('.hbs', handlebars({
   extname: '.hbs',
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers.js')
 }))
 app.set('view engine', '.hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
