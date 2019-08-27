@@ -44,9 +44,9 @@ module.exports = {
           tel: faker.phone.phoneNumber(),
           address: faker.address.streetAddress(),
           opening_hours: '08:00',
-          image: faker.image.imageUrl(),
+          image: faker.image.food(),
           description: faker.lorem.text(),
-          CategoryId: Math.floor(Math.random() * 5) + 1,
+          CategoryId: Math.floor(Math.random() * 7) + 1,
           createdAt: new Date(),
           updatedAt: new Date()
         })
