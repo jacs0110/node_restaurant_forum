@@ -23,6 +23,7 @@ let categoryController = {
       return Category.create({
         name: req.body.name
       }).then(category => {
+        req.flash('success_messages', 'Create a new category successfully!')
         res.redirect('/admin/categories')
       })
     }
@@ -37,10 +38,22 @@ let categoryController = {
         .then((category) => {
           category.update(req.body)
             .then((category) => {
+              req.flash('success_messages', 'Update a category successfully!')
               res.redirect('/admin/categories')
             })
         })
     }
+  },
+
+  deleteCategory: (req, res) => {
+    return Category.findByPk(req.params.id)
+      .then((category) => {
+        category.destroy()
+          .then((category) => {
+            req.flash('success_messages', 'Delete a category successfully!')
+            res.redirect('/admin/categories')
+          })
+      })
   }
 }
 
