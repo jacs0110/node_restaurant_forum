@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const fs = require('fs')
 const User = db.User
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '9eed8735c675a97'
 
@@ -56,8 +58,11 @@ const userController = {
     if (req.user.id === Number(req.params.id)) {
       isSameUser = true
     }
-    return User.findByPk(req.params.id).then(user => {
-      return res.render('user', { targetUser: user, isSameUser: isSameUser })
+    return User.findAndCountAll({
+      where: { id: req.params.id },
+      include: [{ model: Comment, include: [Restaurant] }]
+    }).then(result => {
+      return res.render('user', { targetUser: result.rows[0], isSameUser: isSameUser, counts: result.count })
     })
   },
 
