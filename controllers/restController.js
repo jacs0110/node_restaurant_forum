@@ -1,6 +1,8 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const User = db.User
+const Comment = db.Comment
 const pageLimit = 9
 
 let restController = {
@@ -15,7 +17,12 @@ let restController = {
       categoryId = Number(req.query.categoryId)
       whereQuery['categoryId'] = categoryId
     }
-    Restaurant.findAndCountAll({ include: Category, where: whereQuery, offset: offset, limit: pageLimit }).then(result => {
+    Restaurant.findAndCountAll({
+      include: Category,
+      where: whereQuery,
+      offset: offset,
+      limit: pageLimit
+    }).then(result => {
       // pagination
       let page = Number(req.query.page) || 1
       let pages = Math.ceil(result.count / pageLimit)
@@ -43,8 +50,9 @@ let restController = {
 
   getRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id, {
-      include: Category
+      include: [Category, { model: Comment, include: [User] }],
     }).then(restaurant => {
+      console.log(restaurant.Comments[0].dataValues)
       return res.render('restaurant', {
         restaurant: restaurant
       })
