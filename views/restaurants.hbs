@@ -41,7 +41,7 @@
         <div class="d-flex flex-row">
           {{#if this.isFavorited }}
           <form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-              class="btn btn-danger btn-sm mr-3">Remote Favorite</button></form>
+              class="btn btn-danger btn-sm mr-3">Remove Favorite</button></form>
           {{else}}
           <form action="/favorite/{{this.id}}" method="POST"><button type="submit"
               class="btn btn-primary btn-sm mr-3">Add to

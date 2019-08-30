@@ -22,11 +22,11 @@
       <img class="" src="{{this.image}}" width="140px" height="140px">
     </a>
     <h2>{{this.name}}</h2>
-    <span class="badge badge-secondary">Followes：{{this.FollowerCount}}</span>
+    <span class="badge badge-secondary">Followers：{{this.FollowerCount}}</span>
     <p>
       {{#if this.isFollowed }}
       <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-          type="submit" class="btn btn-danger">Unfollowe</button></form>
+          type="submit" class="btn btn-danger">Unfollow</button></form>
       {{else}}
       <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
           class="btn btn-primary">Follow</button></form>
