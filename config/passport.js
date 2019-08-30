@@ -36,7 +36,11 @@ passport.deserializeUser((id, cb) => {
       {
         model: Restaurant,
         as: 'FavoriteRestaurants'
-      }
+      },
+      {
+        model: Restaurant,
+        as: 'LikedRestaurants'
+      },
     ]
   }).then(user => {
     return cb(null, user)
