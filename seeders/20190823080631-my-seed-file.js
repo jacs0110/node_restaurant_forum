@@ -50,6 +50,7 @@ module.exports = {
           image: faker.image.food(),
           description: faker.lorem.text(),
           CategoryId: Math.floor(Math.random() * 7) + 1,
+          viewCount: 0,
           createdAt: new Date(),
           updatedAt: new Date()
         })
