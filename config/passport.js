@@ -46,7 +46,7 @@ passport.deserializeUser((id, cb) => {
         as: 'Followers'
       },
       {
-        model: Restaurant,
+        model: User,
         as: 'Followings'
       },
     ]
