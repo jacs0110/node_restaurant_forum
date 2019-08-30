@@ -32,7 +32,8 @@ let restController = {
 
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        description: r.dataValues.description.substring(0, 50)
+        description: r.dataValues.description.substring(0, 50),
+        isFavorited: req.user.FavoriteRestaurants.map(d => d.id).includes(r.id)
       }))
       Category.findAll().then(categories => {
         return res.render('restaurants', {
