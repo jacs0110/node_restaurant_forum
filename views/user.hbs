@@ -18,28 +18,98 @@
     </div>
   </div>
   <br>
-  <div class="row justify-content-center">
-    <div class="col-2" style="text-align: center">
-      <a href="javascript:history.back()">Back</a>
-    </div>
-  </div>
 </div>
 <br>
 <br>
 <br>
 
-
 <div class="container">
-  <nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1"><b>{{counts}}</b> comments that you had for following restaurants:</span>
-  </nav>
-  <br>
-  <div class="d-flex justify-content-start flex-wrap">
-    {{#each targetUser.Comments}}
-    <div class="col-2">
-      <a href="/restaurants/{{this.Restaurant.id}}"><img class="card-img-top" src="{{this.Restaurant.image}}"
-          alt="Card image cap" width="100px"></a>
+  <div class="row">
+    <div class="col-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <span>Total <b>{{targetUser.Comments.length}}</b> comments for <b>{{Restaurants.length}}
+            </b> restaurants below:</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-start flex-wrap">
+            {{#each Restaurants}}
+            <div class="col-2">
+              <a href="/restaurants/{{this.id}}"><img class="card-img-top" src="{{this.image}}" alt="Card image cap"
+                  width="100px"></a>
+              <a href="/restaurants/{{this.id}}">
+                <h6 class="mt-2">{{this.name}}</h6>
+              </a>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
     </div>
-    {{/each}}
+    <div class="col-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <b>{{targetUser.FavoriteRestaurants.length}}</b> favorite restaurants</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-start flex-wrap">
+            {{#each targetUser.FavoriteRestaurants}}
+            <div class="col-2">
+              <a href="/restaurants/{{this.id}}"><img class="card-img-top" src="{{this.image}}" alt="Card image cap"
+                  width="100px"></a>
+              <a href="/restaurants/{{this.id}}">
+                <h6 class="mt-2">{{this.name}}</h6>
+              </a>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <b>{{targetUser.Followings.length}}</b> followings</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-start flex-wrap">
+            {{#each targetUser.Followings}}
+            <div class="col-2">
+              <a href="/users/{{this.id}}"><img class="card-img-top" src="{{this.image}}" alt="Card image cap"
+                  width="100px"></a>
+              <a href="/users/{{this.id}}">
+                <h6 class="mt-2">{{this.name}}</h6>
+              </a>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <b>{{targetUser.Followers.length}}</b> followers</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-start flex-wrap">
+            {{#each targetUser.Followers}}
+            <div class="col-2">
+              <a href="/users/{{this.id}}"><img class="card-img-top" src="{{this.image}}" alt="Card image cap"
+                  width="100px"></a>
+              <a href="/users/{{this.id}}">
+                <h6 class="mt-2">{{this.name}}</h6>
+              </a>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-2" style="text-align: center">
+    <a href="javascript:history.back()">Back</a>
   </div>
 </div>

@@ -9,6 +9,8 @@ const Followership = db.Followership
 const Restaurant = db.Restaurant
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '9eed8735c675a97'
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 const userController = {
   signUpPage: (req, res) => {
@@ -63,9 +65,32 @@ const userController = {
     }
     return User.findAndCountAll({
       where: { id: req.params.id },
-      include: [{ model: Comment, include: [Restaurant] }]
+      include: [
+        { model: Comment, include: [Restaurant] },
+        { model: Restaurant, as: "FavoriteRestaurants" },
+        { model: User, as: "Followers" },
+        { model: User, as: "Followings" },
+      ]
     }).then(result => {
-      return res.render('user', { targetUser: result.rows[0], isSameUser: isSameUser, counts: result.count })
+      // filter out unique restaurant id from those restaurants with comments
+      const commentedRestaurants = [...new Set(result.rows[0].Comments.map(x => x.RestaurantId))]
+
+      // query restaurant info with an array of uniqle restaurant id
+      Restaurant.findAll({
+        where: {
+          id: {
+            [Op.in]: commentedRestaurants
+          }
+        }
+      }).then(Restaurants => {
+        console.log(Restaurants.length)
+        return res.render('user', {
+          targetUser: result.rows[0],
+          isSameUser: isSameUser,
+          counts: result.count,
+          Restaurants: Restaurants
+        })
+      })
     })
   },
 
