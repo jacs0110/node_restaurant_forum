@@ -9,6 +9,12 @@
     <div class="col-8">
       <h1><b>{{targetUser.name}}</b></h1>
       <h4>{{targetUser.email}}</h4>
+      <ul>
+        <li><b>{{Restaurants.length}}</b> restaurants that you commented</li>
+        <li><b>{{targetUser.FavoriteRestaurants.length}}</b> favorite restaurants</li>
+        <li><b>{{targetUser.Followings.length}}</b> users you follow</li>
+        <li><b>{{targetUser.Followers.length}}</b> follows you</li>
+      </ul>
       <br />
       {{#if isSameUser}}
       <a href="/users/{{targetUser.id}}/edit">
