@@ -116,6 +116,28 @@ let adminService = {
       return callback({ users: users })
     })
   },
+
+  putUsers: (req, res, callback) => {
+    return User.findByPk(req.params.id).then(user => {
+      if (user.isAdmin) {
+        user.update({
+          isAdmin: 0
+        })
+          .then((user) => {
+            return callback({ status: 'success', message: 'User was successfully updated!' })
+          })
+      } else {
+        user.update({
+          isAdmin: 1
+        })
+          .then((user) => {
+            return callback({ status: 'success', message: 'User was successfully updated!' })
+          })
+      }
+    }).catch(err => {
+      return callback({ status: 'error', message: 'User not found!' })
+    })
+  }
 }
 
 module.exports = adminService
