@@ -40,6 +40,18 @@ let categoryService = {
         })
     }
   },
+
+  deleteCategory: (req, res, callback) => {
+    return Category.findByPk(req.params.id)
+      .then((category) => {
+        category.destroy()
+          .then((category) => {
+            return callback({ status: 'success', message: 'Delete a category successfully!' })
+          })
+      }).catch(err => {
+        return callback({ status: 'error', message: 'ID not found!' })
+      })
+  }
 }
 
 module.exports = categoryService
