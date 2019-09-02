@@ -36,11 +36,9 @@ app.use((req, res, next) => {
   next()
 })
 
-
-
 app.listen(port, () => {
   db.sequelize.sync()
   console.log(`Express app is listening on port ${port}...`)
 })
 
-require('./routes')(app, passport)
+require('./routes')(app)
