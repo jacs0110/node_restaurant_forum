@@ -37,5 +37,6 @@ router.post('/signup', userController.signUp)
 
 // user frontend
 router.get('/restaurants', authenticated, restController.getRestaurants)
+router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
 module.exports = router
