@@ -1,6 +1,7 @@
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
+const User = db.User
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '9eed8735c675a97'
 
@@ -98,7 +99,6 @@ let adminService = {
     }
   },
 
-
   deleteRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id).then(restaurant => {
       restaurant.destroy()
@@ -108,6 +108,12 @@ let adminService = {
             message: ''
           })
         })
+    })
+  },
+
+  editUsers: (req, res, callback) => {
+    return User.findAll().then(users => {
+      return callback({ users: users })
     })
   },
 }

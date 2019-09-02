@@ -73,8 +73,8 @@ let adminController = {
   },
 
   editUsers: (req, res) => {
-    return User.findAll().then(users => {
-      return res.render('admin/users', { users: users })
+    adminService.editUsers(req, res, data => {
+      return res.render('admin/users', data)
     })
   },
 
