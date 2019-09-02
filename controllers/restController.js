@@ -39,27 +39,8 @@ let restController = {
   },
 
   getTopRestaurants: (req, res) => {
-    return Restaurant.findAll({
-      include: [
-        { model: User, as: 'FavoriteUsers' }
-      ]
-    }).then(restaurants => {
-      const data = restaurants.map(r => ({
-        ...r.dataValues,
-        isFavorited: req.user.FavoriteRestaurants.map(d => d.id).includes(r.id)
-      }))
-
-      // sort restaurants
-      let sortedRestaurants = data.sort((a, b) => b.FavoriteUsers.length - a.FavoriteUsers.length)
-
-      // filter out restauratns with zero FavoriteUsers
-      sortedRestaurants = sortedRestaurants.filter(restaurants => {
-        return restaurants.FavoriteUsers.length > 0
-      })
-
-      // select top 10 restauants
-      let topRestaurants = sortedRestaurants.slice(0, 10)
-      return res.render('topRestaurant', { topRestaurants: topRestaurants })
+    restService.getTopRestaurants(req, res, data => {
+      return res.render('topRestaurant', data)
     })
   }
 }
