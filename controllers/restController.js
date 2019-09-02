@@ -27,14 +27,8 @@ let restController = {
   },
 
   getDashboard: (req, res) => {
-    return Restaurant.findAndCountAll({
-      where: { id: req.params.id },
-      include: [Comment, Category]
-    }).then(result => {
-      return res.render('dashboard', {
-        restaurant: result.rows[0],
-        numComments: result.count
-      })
+    restService.getDashboard(req, res, data => {
+      return res.render('dashboard', data)
     })
   },
 

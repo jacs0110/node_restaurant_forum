@@ -112,7 +112,19 @@ let restService = {
       console.log(sortedRestaurants)
       return callback({ topRestaurants: topRestaurants })
     })
-  }
+  },
+
+  getDashboard: (req, res, callback) => {
+    return Restaurant.findAndCountAll({
+      where: { id: req.params.id },
+      include: [Comment, Category]
+    }).then(result => {
+      return callback({
+        restaurant: result.rows[0],
+        numComments: result.count
+      })
+    })
+  },
 }
 
 module.exports = restService
