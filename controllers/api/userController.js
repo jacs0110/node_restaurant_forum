@@ -45,6 +45,25 @@ let userController = {
       })
     })
   },
+
+  signUp: (req, res) => {
+    if (req.body.passwordCheck !== req.body.password) {
+      return res.json({ status: 'error', message: 'Passwords are inconsistent' })
+    } else {
+      User.findOne({ where: { email: req.body.email } }).then(user => {
+        if (user) {
+          return res.json({ status: 'error', message: 'Please use another email to register!' })
+        } else {
+          User.create({
+            name: req.body.email,
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+          }).then(user => {
+            return res.json({ status: 'success', message: 'Sign up successfully!' })
+          })
+        }
+      })
+    }
+  },
 }
 
 module.exports = userController
