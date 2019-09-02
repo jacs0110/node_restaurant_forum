@@ -26,6 +26,20 @@ let categoryService = {
       })
     }
   },
+
+  putCategory: (req, res, callback) => {
+    if (!req.body.name) {
+      return callback({ status: 'error', message: 'Please enter a name!' })
+    } else {
+      return Category.findByPk(req.params.id)
+        .then((category) => {
+          category.update(req.body)
+            .then((category) => {
+              return callback({ status: 'success', message: 'Update a category successfully!' })
+            })
+        })
+    }
+  },
 }
 
 module.exports = categoryService
