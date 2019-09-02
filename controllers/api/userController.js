@@ -1,4 +1,3 @@
-require('dotenv').config()
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../../models')
 const User = db.User

@@ -6,14 +6,12 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const handlebars = require('express-handlebars')
 const methodOverride = require('method-override')
-const passport = require('./config/passport.js')
-
 const port = process.env.PORT || 3000
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-
+const passport = require('./config/passport.js')
 // set up view engine
 app.engine('.hbs', handlebars({
   extname: '.hbs',
