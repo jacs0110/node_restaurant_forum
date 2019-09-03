@@ -11,6 +11,7 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '9eed8735c675a97'
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const userService = require('../services/userService')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -190,18 +191,9 @@ const userController = {
   },
 
   getTopUser: (req, res) => {
-    return User.findAll({
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    }).then(users => {
-      users = users.map(user => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-      }))
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('topUser', { users: users })
+    console.log('getTopUser')
+    userService.getTopUser(req, res, data => {
+      return res.render('topUser', data)
     })
   },
 
