@@ -4,6 +4,7 @@ const adminController = require('../controllers/api/adminController.js')
 const categoryController = require('../controllers/api/categoryController.js')
 const userController = require('../controllers/api/userController.js')
 const restController = require('../controllers/api/restController.js')
+const commentController = require('../controllers/api/commentController.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 const passport = require('../config/passport')
@@ -44,5 +45,7 @@ router.get('/restaurants/feeds', authenticated, restController.getFeeds)
 router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
 router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 router.get('/restaurants/:id', authenticated, restController.getRestaurant)
+
+router.post('/comments', authenticated, commentController.postComment)
 
 module.exports = router
