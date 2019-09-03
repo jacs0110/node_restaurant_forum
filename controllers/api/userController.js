@@ -96,7 +96,13 @@ let userController = {
     userService.deleteFollowing(req, res, data => {
       return res.json(data)
     })
-  }
+  },
+
+  addFavorite: (req, res) => {
+    userService.addFavorite(req, res, data => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController

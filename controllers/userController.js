@@ -89,11 +89,15 @@ const userController = {
   },
 
   addFavorite: (req, res) => {
-    return Favorite.create({
-      UserId: req.user.id,
-      RestaurantId: req.params.restaurantId
-    }).then((restaurant) => {
-      return res.redirect('back')
+    userService.addFavorite(req, res, data => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+      } else {
+        req.flash('success_messages', data['message'])
+      }
+      userService.addFavorite(req, res, data => {
+        return res.redirect('back')
+      })
     })
   },
 

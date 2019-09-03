@@ -136,7 +136,26 @@ let userService = {
     }).catch(err => {
       return callback({ status: 'error', message: 'Erro when deleting followship!' })
     })
-  }
+  },
+
+  addFavorite: (req, res, callback) => {
+
+    return Restaurant.findByPk(req.params.restaurantId).then(restaurant => {
+
+      if (!restaurant) {
+        return callback({ status: 'error', message: 'Restaurant not found!' })
+      }
+
+      return Favorite.create({
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      }).then((restaurant) => {
+        return callback({ status: 'success', message: 'Add favorite successfully!' })
+      })
+    })
+
+
+  },
 }
 
 module.exports = userService
