@@ -140,10 +140,12 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
-    return Followership.create({
-      followerId: req.user.id,
-      followingId: req.params.userId
-    }).then(followship => {
+    userService.addFollowing(req, res, data => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+      } else {
+        req.flash('success_messages', data['message'])
+      }
       return res.redirect('back')
     })
   },

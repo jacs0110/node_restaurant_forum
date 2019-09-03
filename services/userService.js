@@ -103,6 +103,25 @@ let userService = {
         })
     }
   },
+
+  addFollowing: (req, res, callback) => {
+    return User.findByPk(req.params.userId).then(user => {
+
+      if (!user) {
+        return callback({ status: 'error', message: 'Following user not found!' })
+      }
+
+      Followership.create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }).then(followship => {
+        return callback({ status: 'success', message: 'Add following successfully!' })
+      }).catch(err => {
+        return callback({ status: 'error', message: 'Error when adding following!' })
+      })
+    })
+
+  },
 }
 
 module.exports = userService
