@@ -63,6 +63,46 @@ let userService = {
       })
     })
   },
+
+  putUser: (req, res, callback) => {
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            if (!user) {
+              return callback({ status: 'error', message: 'User not found!' })
+            }
+            user.update({
+              name: req.body.name,
+              email: req.body.email,
+              password: user.password,
+              isAdmin: user.isAdmin,
+              image: file ? img.data.link : user.image,
+            }).then((user) => {
+              return callback({ status: 'success', message: 'User has been updated successfully!' })
+            })
+          })
+      })
+    } else {
+      return User.findByPk(req.params.id)
+        .then((user) => {
+          if (!user) {
+            return callback({ status: 'error', message: 'User not found!' })
+          }
+          user.update({
+            name: req.body.name,
+            email: req.body.email,
+            password: user.password,
+            isAdmin: user.isAdmin,
+            image: user.image,
+          }).then(user => {
+            return callback({ status: 'success', message: 'User has been updated successfully!' })
+          })
+        })
+    }
+  },
 }
 
 module.exports = userService

@@ -77,43 +77,15 @@ const userController = {
   },
 
   putUser: (req, res) => {
-    const { file } = req
-    console.log(file)
-    console.log('file above')
-    if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID)
-      imgur.upload(file.path, (err, img) => {
-        return User.findByPk(req.params.id)
-          .then((user) => {
-            user.update({
-              name: req.body.name,
-              email: req.body.email,
-              password: user.password,
-              isAdmin: user.isAdmin,
-              image: file ? img.data.link : user.image,
-            }).then((user) => {
-              // console.log(user)
-              req.flash('success_messages', 'User has been updated successfully !')
-              res.redirect(`/users/${user.id}`)
-            })
-          })
-      })
-    } else {
-      return User.findByPk(req.params.id)
-        .then((user) => {
-          user.update({
-            name: req.body.name,
-            email: req.body.email,
-            password: user.password,
-            isAdmin: user.isAdmin,
-            image: user.image,
-          }).then(user => {
-            // console.log(user)
-            req.flash('success_messages', 'User has been updated successfully !')
-            res.redirect(`/users/${user.id}`)
-          })
-        })
-    }
+    userService.putUser(req, res, data => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+      } else {
+        req.flash('success_messages', data['message'])
+      }
+
+      return res.redirect(`/users/${req.params.id}`)
+    })
   },
 
   addFavorite: (req, res) => {

@@ -51,5 +51,6 @@ router.delete('/comments/:id', authenticated, authenticatedAdmin, commentControl
 
 router.get('/users/top', authenticated, userController.getTopUser)
 router.get('/users/:id', authenticated, userController.getUser)
+router.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
 
 module.exports = router
