@@ -152,7 +152,6 @@ let userService = {
     })
   },
 
-
   deleteFavorite: (req, res, callback) => {
     return Restaurant.findByPk(req.params.restaurantId).then(restaurant => {
       if (!restaurant) {
@@ -185,6 +184,28 @@ let userService = {
         RestaurantId: req.params.restaurantId
       }).then((restaurant) => {
         return callback({ status: 'success', message: 'Like a restaurant successfully!' })
+      })
+    })
+  },
+
+  deleteLike: (req, res, callback) => {
+    return Restaurant.findByPk(req.params.restaurantId).then(restaurant => {
+      if (!restaurant) {
+        return callback({ status: 'error', message: 'Restaurant not found!' })
+      }
+      return Like.findOne({
+        where: {
+          UserId: req.user.id,
+          RestaurantId: req.params.restaurantId
+        }
+      }).then(like => {
+        if (like) {
+          like.destroy().then(restaurant => {
+            return callback({ status: 'success', message: 'Unlike successfully!' })
+          })
+        } else {
+          return callback({ status: 'error', message: 'No record in database!' })
+        }
       })
     })
   },

@@ -95,9 +95,7 @@ const userController = {
       } else {
         req.flash('success_messages', data['message'])
       }
-      userService.addFavorite(req, res, data => {
-        return res.redirect('back')
-      })
+      return res.redirect('back')
     })
   },
 
@@ -108,9 +106,7 @@ const userController = {
       } else {
         req.flash('success_messages', data['message'])
       }
-      userService.deleteFavorite(req, res, data => {
-        return res.redirect('back')
-      })
+      return res.redirect('back')
     })
   },
 
@@ -121,22 +117,18 @@ const userController = {
       } else {
         req.flash('success_messages', data['message'])
       }
-      userService.addLike(req, res, data => {
-        return res.redirect('back')
-      })
+      return res.redirect('back')
     })
   },
 
   deleteLike: (req, res) => {
-    return Like.findOne({
-      where: {
-        UserId: req.user.id,
-        RestaurantId: req.params.restaurantId
+    userService.deleteLike(req, res, data => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+      } else {
+        req.flash('success_messages', data['message'])
       }
-    }).then(like => {
-      like.destroy().then(restaurant => {
-        return res.redirect('back')
-      })
+      return res.redirect('back')
     })
   },
 

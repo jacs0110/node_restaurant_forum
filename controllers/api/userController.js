@@ -115,6 +115,12 @@ let userController = {
       return res.json(data)
     })
   },
+
+  deleteLike: (req, res) => {
+    userService.deleteLike(req, res, data => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController
