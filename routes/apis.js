@@ -50,5 +50,6 @@ router.post('/comments', authenticated, commentController.postComment)
 router.delete('/comments/:id', authenticated, authenticatedAdmin, commentController.deleteComment)
 
 router.get('/users/top', authenticated, userController.getTopUser)
+router.get('/users/:id', authenticated, userController.getUser)
 
 module.exports = router

@@ -28,6 +28,41 @@ let userService = {
       return callback({ users: users })
     })
   },
+
+  getUser: (req, res, callback) => {
+    let isSameUser = false
+    if (req.user.id === Number(req.params.id)) {
+      isSameUser = true
+    }
+    return User.findAndCountAll({
+      where: { id: req.params.id },
+      include: [
+        { model: Comment, include: [Restaurant] },
+        { model: Restaurant, as: "FavoriteRestaurants" },
+        { model: User, as: "Followers" },
+        { model: User, as: "Followings" },
+      ]
+    }).then(result => {
+      // filter out unique restaurant id from those restaurants with comments
+      const commentedRestaurants = [...new Set(result.rows[0].Comments.map(x => x.RestaurantId))]
+
+      // query restaurant info with an array of uniqle restaurant id
+      Restaurant.findAll({
+        where: {
+          id: {
+            [Op.in]: commentedRestaurants
+          }
+        }
+      }).then(Restaurants => {
+        return callback({
+          targetUser: result.rows[0],
+          isSameUser: isSameUser,
+          counts: result.count,
+          Restaurants: Restaurants
+        })
+      })
+    })
+  },
 }
 
 module.exports = userService
