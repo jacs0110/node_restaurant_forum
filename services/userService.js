@@ -122,6 +122,21 @@ let userService = {
     })
 
   },
+
+  deleteFollowing: (req, res, callback) => {
+    return Followership.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    }).then(followship => {
+      followship.destroy().then(followship => {
+        return callback({ status: 'success', message: 'Delete followship successfully!' })
+      })
+    }).catch(err => {
+      return callback({ status: 'error', message: 'Erro when deleting followship!' })
+    })
+  }
 }
 
 module.exports = userService

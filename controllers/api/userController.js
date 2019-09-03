@@ -90,6 +90,13 @@ let userController = {
       return res.json(data)
     })
   },
+
+
+  deleteFollowing: (req, res) => {
+    userService.deleteFollowing(req, res, data => {
+      return res.json(data)
+    })
+  }
 }
 
 module.exports = userController

@@ -151,15 +151,13 @@ const userController = {
   },
 
   deleteFollowing: (req, res) => {
-    return Followership.findOne({
-      where: {
-        followerId: req.user.id,
-        followingId: req.params.userId
+    userService.deleteFollowing(req, res, data => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+      } else {
+        req.flash('success_messages', data['message'])
       }
-    }).then(followship => {
-      followship.destroy().then(followship => {
-        return res.redirect('back')
-      })
+      return res.redirect('back')
     })
   }
 }
