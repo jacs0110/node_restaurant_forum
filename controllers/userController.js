@@ -102,13 +102,13 @@ const userController = {
   },
 
   deleteFavorite: (req, res) => {
-    return Favorite.findOne({
-      where: {
-        UserId: req.user.id,
-        RestaurantId: req.params.restaurantId
+    userService.deleteFavorite(req, res, data => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+      } else {
+        req.flash('success_messages', data['message'])
       }
-    }).then((favorite) => {
-      favorite.destroy().then((restaurant) => {
+      userService.deleteFavorite(req, res, data => {
         return res.redirect('back')
       })
     })

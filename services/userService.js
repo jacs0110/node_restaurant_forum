@@ -139,22 +139,41 @@ let userService = {
   },
 
   addFavorite: (req, res, callback) => {
-
     return Restaurant.findByPk(req.params.restaurantId).then(restaurant => {
-
       if (!restaurant) {
         return callback({ status: 'error', message: 'Restaurant not found!' })
       }
-
       return Favorite.create({
         UserId: req.user.id,
         RestaurantId: req.params.restaurantId
       }).then((restaurant) => {
+        console.log('create favorite')
         return callback({ status: 'success', message: 'Add favorite successfully!' })
       })
     })
+  },
 
 
+  deleteFavorite: (req, res, callback) => {
+    return Restaurant.findByPk(req.params.restaurantId).then(restaurant => {
+      if (!restaurant) {
+        return callback({ status: 'error', message: 'Restaurant not found!' })
+      }
+      return Favorite.findOne({
+        where: {
+          UserId: req.user.id,
+          RestaurantId: req.params.restaurantId
+        }
+      }).then((favorite) => {
+        if (favorite) {
+          favorite.destroy().then((restaurant) => {
+            return callback({ status: 'success', message: 'Delete favorite successfully!' })
+          })
+        } else {
+          return callback({ status: 'error', message: 'No record in database!' })
+        }
+      })
+    })
   },
 }
 

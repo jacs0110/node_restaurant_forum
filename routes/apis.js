@@ -57,5 +57,6 @@ router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.deleteFollowing)
 
 router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+router.delete('/favorite/:restaurantId', authenticated, userController.deleteFavorite)
 
 module.exports = router

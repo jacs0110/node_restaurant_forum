@@ -103,6 +103,13 @@ let userController = {
       return res.json(data)
     })
   },
+
+
+  deleteFavorite: (req, res) => {
+    userService.deleteFavorite(req, res, data => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = userController
