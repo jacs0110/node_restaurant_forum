@@ -104,9 +104,14 @@ let userController = {
     })
   },
 
-
   deleteFavorite: (req, res) => {
     userService.deleteFavorite(req, res, data => {
+      return res.json(data)
+    })
+  },
+
+  addLike: (req, res) => {
+    userService.addLike(req, res, data => {
       return res.json(data)
     })
   },
