@@ -26,7 +26,9 @@ const userController = {
       User.findOne({
         where: {
           email: req.body.email
-        }.then(user => {
+        }
+      })
+        .then(user => {
           if (user) {
             req.flash('error_messages', "This email has been registered!")
             return res.redirect('/signup')
@@ -40,7 +42,6 @@ const userController = {
             })
           }
         })
-      })
     }
   },
 
