@@ -21,7 +21,7 @@ let commentController = {
       } else {
         req.flash('success_messages', data['message'])
       }
-      return res.redirect(`/restaurants/${comment.RestaurantId}`)
+      return res.redirect(`back`)
     })
   }
 }
